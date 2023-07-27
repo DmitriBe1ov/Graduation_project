@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+<head>
+    <!-- //Meta tag Keywords -->
+    <title>{% block title %} {% endblock title %}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- //Meta tag Keywords -->
+    <!-- Custom-Files -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <!-- Bootstrap-Core-CSS -->
+    <!--/ Style-CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css" media="all">
+    <!--// Style-CSS -->
+    <!-- font-awesome-icons -->
+    <link href="{% static 'css/font-awesome.css' %}" rel="stylesheet">
+    <!-- //font-awesome-icons -->
+    <!-- /Fonts -->
+    <link href="//fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700"
+          rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:200,200i,300,300i,400,400i,600,600i,700,700i,900"
+          rel="stylesheet">
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+
+    <style>
+  .menu-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .menu-button:hover {
+    background-color: #45a049;
+  }
+
+  .media-container {
+    display: none;
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+
+  .custom-media-left {
+  display: inline-block;
+  width: 64px;
+
+.fixed-width-text {
+  width: 200px;
+  word-wrap: break-word;
+}
+body {
+      color: white;
+      padding-top: 40px;
+    }
+    .profile-card {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #f8f9fa;
+    }
+    .profile-card h2 {
+      margin-bottom: 20px;
+    }
+    .profile-image {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 20px;
+    }
+    .last-login {
+      margin-top: 0.1px;
+      padding: 10px;
+      border: 1px solid #ced4da;
+      background-color: #f1f1f1;
+    }
+    .form-control[readonly] {
+      background-color: #f8f9fa;
+    }
+    .my_form .form-control{
+        font-size: 12px;
+        height: 30px;
+        padding: 4px 8px;
+    }
+  }
+
+
+
+
+    </style>
+
+</head>
+<body style="background-color: #4B1212">
+
+<script>
+  function toggleMediaContainer() {
+    var container = document.getElementById("media-container");
+    container.style.display = container.style.display === "none" ? "block" : "none";
+  }
+
+
+
+
+
+</script>
+<div id="page" class="page">
+    <div id="home" style="background-color: #4B1212">
+        {% include 'include/header.html' %}
+    </div>
+
+    {% block content %}
+
+    {% endblock content %}
+    {% include 'include/footer.html' %}
+</div>
+</body>
+</html>

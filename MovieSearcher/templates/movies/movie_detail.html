@@ -1,0 +1,188 @@
+{% extends 'movies/base.html' %}
+
+{% block title %} {{ movie.title }} {% endblock title %}
+<!--{% block header %} bg2 {% endblock header %}-->
+
+{% block container %}
+<div class="container py-md-3">
+    {% endblock container %}
+
+    {% block sidebar %}
+    <div class="side-bar col-lg-4">
+        {% endblock sidebar %}
+
+        {% block movie %}
+        <div class="left-ads-display col-lg-8">
+            <div class="row">
+                <img src="{{ movie.poster.url }}" style="width: 280px;height: 450px;" alt="">
+                <div class="desc1-right col-md-6 pl-lg-10">
+                    <h3 class="editContent" style="outline: none; cursor: inherit;color: white;">
+                        {{ movie.title }}
+                    </h3>
+                    <h5 class="editContent"></h5>
+                    <ul>
+                        <li style="list-style: none">
+                            {% if movie.year %}
+                            <span><b>Год:</b><a href="/filter/?year={{ movie.year }}"
+
+                                                class="movie-link">{% endif %} {{ movie.year }}</a></span></li>
+                        <li style="list-style: none">
+                            <span><b>Страна:</b><a href="/filter/?country={{ country.id }}"
+                                                   class="movie-link">  {{ movie.country }}</a></span>
+                        </li>
+                        <br>
+                        <li style="list-style: none">
+
+                            <span><b>Режиссер:</b>
+
+                                 <a href="{% url 'director_view' movie.director.name %}" class="movie-link">
+                                     {{movie.director.name}}</a>
+                                </span>
+
+                        </li>
+                        <br>
+
+                        <li style="list-style: none">
+                            <span><b>Актеры:</b><br>
+                                {% for actor in movie.actors.all %}
+                                    <a href="{% url 'actor_view' actor.name %}" class="movie-link">
+                                        {{ actor.name }}</a>{% if not forloop.last %}, {% endif %}
+                                {% endfor %}
+                            </span>
+                        </li>
+                        <br>
+
+                        <li style="list-style: none"><span><b>Жанр:</b>
+                        {% for genre in movie.genre.all %}
+                         <a href="/filter/?genre={{ genre.id }}" class="movie-link">{{ genre.name }}</a>{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                                    </span>
+                        </li>
+                        <br>
+                        <li style="list-style: none">
+                            <span><b>Бюджет:</b> ${{ movie.budget }}</span></li>
+                        <li style="list-style: none">
+                            <span><b>Сборы в мире:</b> ${{ movie.fees_in_the_world }}</span>
+                        </li>
+                        <br>
+                        <li style="list-style: none">
+                            <a><b>Рейтинг фильма:</b>
+                                {{ average_rating|floatformat:1 }}
+                            </a>
+                        </li>
+                        <li style="font-size: 12px;list-style: none;">
+                            <a><b>Количество оценок:</b>
+                                {{ rating_count }}
+                            </a>
+                            {% if request.user.is_anonymous %}
+                            <button type="submit" class="pressed-button">
+                                <a href="{% url 'django_login' %}" style="color: white;text-decoration: none;">Поставить
+                                    оценку</a></button>
+                            {% endif %}
+                            {% if rating_form %}
+                            {% if rating_id %}
+                            <form method="POST" action="{% url 'movie_detail' slug=object.slug %}">
+                                {% csrf_token %}
+                                <button type="submit" class="pressed-button">Изменить оценку</button>
+                            </form>
+                            {% else %}
+                            <form method="POST" action="{% url 'movie_detail' slug=object.slug %}">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="id_rating">Оценка:</label>
+                                    {{ rating_form.rating.errors }}
+                                    <input type="range" id="id_rating" name="rating" min="0" max="10"
+                                           class="form-control" required>
+                                </div>
+                                <button type="submit" class="pressed-button">Оценить</button>
+                            </form>
+                            {% endif %}
+                            {% endif %}
+
+
+                    </ul>
+                </div>
+            </div>
+            <div class="row sub-para-w3layouts mt-5">
+
+                <h3 class="shop-sing editContent" style="outline: none; cursor: inherit;color: white;">
+                    О фильме {{ movie.title }}
+                </h3>
+                <p>
+                    {% for image in movie.movie_images.all %}
+                    <img src="{{ image.image.url }}" class="img-shorts" alt="{{image.discription}}">
+                    {% endfor %}
+                </p>
+                <p style="color: white;">
+                    {{movie.description|safe}}
+                </p>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="single-form-left">
+                    <!-- contact form grid -->
+                    <div class="contact-single">
+                        <h3 class="editContent">
+                            Оставить отзыв
+                        </h3>
+                        <form action="{% url 'add_review' movie.id %}" method="post" class="mt-4">
+                            {% csrf_token %}
+                            <div class="form-group editContent">
+                                <label for="contactcomment" class="editContent">
+                                    Ваш комментарий *
+                                </label>
+                                <textarea class="form-control border" rows="7" cols="75" name="text"
+                                          id="contactcomment" required=""></textarea>
+                            </div>
+
+                            <button type="submit" class="pressed-button">
+                                Отправить
+                            </button>
+                        </form>
+                    </div>
+                    <br><br>
+                    <!--  //contact form grid ends here -->
+                    <h3 class="editContent">
+                        Комментарии пользователей
+                    </h3>
+
+                    <div class="pressed-button" onclick="toggleMediaContainer()">Открыть/Закрыть</div>
+
+                    <!-- Контейнер с медиа-элементами -->
+                    {% for review in movie.reviews.all %}
+                    <div class="media py-5">
+                        <img src="{{ review.user.profile.profile_pic.url }}" class="custom-media-left mr-4"
+                             style="width:100px;height:100px;" alt="image">
+                        <div class="media-body mt-4">
+                            <h5 class="mt-0 editContent">
+                                {{ review.user.username }}
+                            </h5>
+                            <div style="width: 400px; word-wrap: break-word;">
+                                <p>
+                                    {{ review.text }}
+                                </p>
+                            </div>
+
+                            {% if review.user == request.user or request.user.is_superuser or request.user.is_staff %}
+                            <form action="{% url 'delete_review' review.id %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="pressed-button">Удалить</button>
+                            </form>
+                            <a href="{% url 'edit_review' review.id%}">
+                                <button class="pressed-button" style="cursor: pointer;">Изменить</button>
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="grid-img-right mt-4 text-right bg bg1">
+    {% include 'include/pagination.html' %}
+</div>
+</div>
+{% endblock movie %}

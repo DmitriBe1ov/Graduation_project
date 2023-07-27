@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+
+
+<section class="vh-100 bg-image">
+    <div class="mask d-flex align-items-center h-100 ">
+        <div class="container h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+                    <div class="card" style="border-radius: 15px;background-color: #600202">
+                        <div class="card-body p-md-5">
+
+                            <h2 class="text-uppercase text-center mb-5" style="color:white">Регистрация</h2>
+
+                            <form method="post">
+                                {% csrf_token %}
+                                {{form.non_field_errors}}
+
+                                <div class="form-outline mb-4">
+                                    <label class="form-label" style="color:white">Логин</label><br>
+                                    {{ form.username }}
+                                    <p style="text-color: white"> {{ form.username.errors }}</p>
+
+                                </div>
+
+                                <div class="form-outline mb-4">
+                                    <label class="form-label" style="color:white">Email</label>
+                                    {{ form.email }}
+                                    <p style="text-color: white"> {{ form.email.errors }}</p>
+                                </div>
+
+                                <div class="form-outline mb-4">
+                                    <label class="form-label" style="color:white">Пароль</label>
+                                    {{ form.password1 }}
+                                    <p style="text-color: white"> {{ form.password1.errors }}</p>
+                                </div>
+
+                                <div class="form-outline mb-4">
+                                    <label class="form-label" style="color:white">Повторите пароль</label>
+                                    {{ form.password2 }}
+                                    <p style="text-color: white"> {{ form.password2.errors }} </p>
+                                </div>
+
+                                <div class="form-outline mb-4">
+                                    <label class="form-label" style="color:white">Бесплатная рассылка фильмов<br>Вам на
+                                        почту будут
+                                        присылаться фильмы, которые мы рекомендуем посмотреть (не спам)</label>
+                                    <b style="color:white">Нажмите здесь -> {{ form.free_mailing_list }}</b>
+
+                                </div>
+
+
+                                <div class="d-flex justify-content-center">
+                                    <button type="submit"
+                                            class="pressed-button">
+                                        Зарегистрироваться
+                                    </button>
+                                </div>
+
+                                <p class="text-center text-muted mt-5 mb-0">Уже есть аккаунт? <a
+                                        href="{% url 'django_login' %}"
+                                        style="color: inherit;
+  text-decoration: none;cursor: pointer;color:white;">Войти</a></p>
+
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

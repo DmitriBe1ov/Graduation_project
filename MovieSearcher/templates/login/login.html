@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block title %}
+{{ title }}
+{% endblock %}
+{% block content %}
+
+<section class="text-center text-lg-start">
+    <style>
+    .reg-blank-login {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh
+      }
+
+
+
+    @media (max-width: 991.98px) {
+      .cascading-right {
+        margin-right: 0;
+      }
+    }
+
+
+
+
+
+    </style>
+
+    <div style="display: flex; justify-content: center; align-items: center;">
+
+        <div class="col-lg-6 mb-5 mb-lg-0">
+            <div class="card cascading-center" style="border-color:black;">
+                <div class="card p-5 shadow-5 text-center" style="background-color: #600202">
+                    <h2 class="fw-bold mb-5" style="color:white">Войти</h2>
+                    <form method="post">
+                        {% csrf_token %}
+                        {{form.non_field_errors}}
+
+
+                        <div class="form-outline mb-4">
+                            <label class="form-label" style="color:white">Логин</label>
+                            {{ form.username }}
+                            <p style="text-color: white"> {{ form.username.errors }}</p>
+                        </div>
+
+                        <div class="form-outline mb-4">
+                            <label class="form-label" style="color:white">Пароль</label>
+                            {{ form.password }}
+                            <p style="text-color: white"> {{ form.password.errors }}</p>
+
+                        </div>
+
+
+                        <div class="d-flex justify-content-center">
+                            <button type="submit"
+                                    class="pressed-button">
+                                Войти
+                            </button>
+
+
+                        </div>
+                        <p class="text-center text-muted mt-5 mb-0">У вас нет аккаунта? Нажмите кнопку <a
+                                href="{% url 'django_register' %}"
+                                class="fw-bold text-body" style="color: inherit;
+  text-decoration: none;cursor: pointer;color:white;">Зарегистрироваться</a>
+                        </p>
+
+                    </form>
+                </div>
+            </div>
+            <br><br><br><br>
+
+        </div>
+    </div>
+</section>
+{% endblock %}
